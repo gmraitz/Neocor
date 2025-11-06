@@ -11,14 +11,9 @@ Sistema completo de gestão financeira e administrativa para clínicas médicas 
 
 Frontend:
 
-React 18 + TypeScript
-Vite (Build tool)
-Tailwind CSS 4
-Radix UI + shadcn/ui
+React 18 + TypeScript/ Vite (Build tool)/ Tailwind CSS 4/ Radix UI + shadcn/ui
 
 
 Ferramentas:
 
-Recharts (Gráficos)
-React Hook Form (Formulários)
-Zustand (Gerenciamento de estado)
+Recharts (Gráficos)/ React Hook Form (Formulários)/ Zustand (Gerenciamento de estado)
