@@ -1,10 +1,10 @@
 Neocor - Sistema de Gestão para Clínicas
 
-
+----
 Sistema completo de gestão financeira e administrativa para clínicas médicas e consultórios.
 
 
-
+----
 🚀 Status: Em Desenvolvimento 
 
 
@@ -15,26 +15,26 @@ Sistema completo de gestão financeira e administrativa para clínicas médicas 
 
 
 
-
+----
 🛠 Tecnologias
 
 
 Frontend: 
 
-React 18 + TypeScript
+- React 18 + TypeScript
 
-Vite (Build tool)
+- Vite (Build tool)
 
-Tailwind CSS 4
+- Tailwind CSS 4
 
-Radix UI + shadcn/ui
+- Radix UI + shadcn/ui
 
 
 
 Ferramentas: 
 
-Recharts (Gráficos)
+- Recharts (Gráficos)
 
-React Hook Form (Formulários)
+- React Hook Form (Formulários)
 
-Zustand (Gerenciamento de estado)
+- Zustand (Gerenciamento de estado)
