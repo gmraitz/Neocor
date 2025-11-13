@@ -34,7 +34,7 @@ export const FiltrosProvider = ({ children }: FiltrosProviderProps) => {
     instituicao: 'todos',
     formaPagamento: 'todos',
     beneficiario: '',
-    executante: '',
+    executante: 'todos',
     localAtendimento: 'todos',
     prestadorArquivo: 'todos',
     codigoProcedimento: '',

@@ -16,9 +16,24 @@ export const useRecebimentos = (filtros: FiltrosRecebimentos | FiltrosDashboard,
     return calcularMetricas(recebimentosFiltrados);
   }, [recebimentosFiltrados]);
 
+  // Calcular métricas do mês anterior para comparação
+  const metricasMesAnterior = useMemo(() => {
+    const mesAtual = new Date();
+    const mesAnterior = new Date(mesAtual.getFullYear(), mesAtual.getMonth() - 1, 1);
+    const fimMesAnterior = new Date(mesAtual.getFullYear(), mesAtual.getMonth(), 0);
+    
+    const recebimentosMesAnterior = recebimentosMock.filter(rec => {
+      const dataRec = new Date(rec.dataAtendimento);
+      return dataRec >= mesAnterior && dataRec <= fimMesAnterior;
+    });
+    
+    return calcularMetricas(recebimentosMesAnterior);
+  }, []);
+
   return {
     recebimentos: recebimentosFiltrados,
     metricas,
+    metricasMesAnterior,
   };
 };
 
@@ -33,6 +48,13 @@ const calcularMetricas = (recebimentos: Recebimento[]) => {
   const valorPendente = recebimentosPendentes.reduce((acc, r) => acc + r.total, 0);
   const valorAtrasado = recebimentosAtrasados.reduce((acc, r) => acc + r.total, 0);
   const valorGlosa = recebimentos.reduce((acc, r) => acc + r.glosa, 0);
+
+  // Novas métricas para o módulo de Recebimentos
+  const valorTotalBruto = valorTotal;
+  const totalGlosado = valorGlosa;
+  const taxaGlosa = valorTotal > 0 ? (valorGlosa / valorTotal) * 100 : 0;
+  const valorLiquido = valorTotal - valorGlosa;
+  const ticketMedioLiquido = totalRecebimentos > 0 ? valorLiquido / totalRecebimentos : 0;
 
   const taxaConversao = totalRecebimentos > 0 
     ? (recebimentosRecebidos.length / totalRecebimentos) * 100 
@@ -56,6 +78,10 @@ const calcularMetricas = (recebimentos: Recebimento[]) => {
     valorPendente,
     valorAtrasado,
     valorGlosa,
+    valorTotalBruto,
+    totalGlosado,
+    taxaGlosa,
+    ticketMedioLiquido,
     taxaConversao,
     maiorRecebimento,
     recebimentosRecebidos: recebimentosRecebidos.length,

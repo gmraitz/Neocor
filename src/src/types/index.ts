@@ -18,22 +18,28 @@ export interface Recebimento {
   executante: string;
   localAtendimento: string;
   prestadorArquivo: string;
+  lote?: string;
+  lotePres?: string;
+  solicitante?: string;
+  plano: string;
+  dataConta?: string;
+  qtdePaga?: number;
+  acomodacao?: string;
+  horaRealizacao?: string;
+  acrescimo?: number;
+  percentualVia?: number;
+  operadorFat?: string;
   status: 'recebido' | 'pendente' | 'atrasado';
-  formaPagamento?: string;
-  instituicao?: string;
+  statusConsolidacao?: 'consolidado' | 'glosado' | 'aberto' | 'pago-parcial';
+  valorPagoParcial?: number;
 }
 
 export interface FiltrosDashboard {
   periodo: string;
   dataInicio?: string;
   dataFim?: string;
-  status?: string;
-  instituicao?: string;
-  formaPagamento?: string;
   executante?: string;
-  localAtendimento?: string;
-  nomeProcedimento?: string;
-  conta?: string;
+  beneficiario?: string;
 }
 
 export interface FiltrosRecebimentos {
@@ -42,13 +48,17 @@ export interface FiltrosRecebimentos {
   periodo: string;
   dataInicio?: string;
   dataFim?: string;
-  instituicao?: string;
-  formaPagamento?: string;
+  plano?: string;
   beneficiario?: string;
   executante?: string;
   localAtendimento?: string;
   prestadorArquivo?: string;
   codigoProcedimento?: string;
+  instituicao?: string;
+  formaPagamento?: string;
+  statusConsolidacao?: string;
+  codGlosa?: string;
+  tipoPeriodo?: 'dataAtendimento' | 'dataConta';
 }
 
 export interface MetricaCard {

@@ -17,6 +17,17 @@ export const aplicarFiltrosRecebimentos = (
     // Filtro de status
     const matchesStatus = filtros.status === 'todos' || rec.status === filtros.status;
 
+    // Filtro de status de consolidação
+    const matchesStatusConsolidacao = 
+      !filtros.statusConsolidacao ||
+      filtros.statusConsolidacao === 'todos' ||
+      rec.statusConsolidacao === filtros.statusConsolidacao;
+
+    // Filtro de código de glosa
+    const matchesCodGlosa =
+      !filtros.codGlosa ||
+      (rec.codGlosa && rec.codGlosa.toLowerCase().includes(filtros.codGlosa.toLowerCase()));
+
     // Filtro de instituição
     const matchesInstituicao =
       !filtros.instituicao ||
@@ -59,12 +70,17 @@ export const aplicarFiltrosRecebimentos = (
       filtros.codigoProcedimento === 'todos' ||
       rec.codigoProcedimento === filtros.codigoProcedimento;
 
-    // Filtro de período
-    const matchesPeriodo = aplicarFiltroPeriodo(rec.dataAtendimento, filtros.periodo, filtros.dataInicio, filtros.dataFim);
+    // Filtro de período - considerar tipo de data (atendimento ou conta)
+    const dataParaFiltro = filtros.tipoPeriodo === 'dataConta' && rec.dataConta 
+      ? rec.dataConta 
+      : rec.dataAtendimento;
+    const matchesPeriodo = aplicarFiltroPeriodo(dataParaFiltro, filtros.periodo, filtros.dataInicio, filtros.dataFim);
 
     return (
       matchesSearch &&
       matchesStatus &&
+      matchesStatusConsolidacao &&
+      matchesCodGlosa &&
       matchesInstituicao &&
       matchesFormaPagamento &&
       matchesBeneficiario &&
@@ -82,49 +98,22 @@ export const aplicarFiltrosDashboard = (
   filtros: FiltrosDashboard
 ): Recebimento[] => {
   return recebimentos.filter((rec) => {
-    // Filtro de status
-    const matchesStatus = !filtros.status || filtros.status === 'todos' || rec.status === filtros.status;
-
-    // Filtro de instituição
-    const matchesInstituicao =
-      !filtros.instituicao ||
-      filtros.instituicao === 'todos' ||
-      rec.instituicao === filtros.instituicao;
-
-    // Filtro de forma de pagamento
-    const matchesFormaPagamento =
-      !filtros.formaPagamento ||
-      filtros.formaPagamento === 'todos' ||
-      rec.formaPagamento === filtros.formaPagamento;
-
     // Filtro de executante
     const matchesExecutante =
       !filtros.executante ||
       filtros.executante === 'todos' ||
       rec.executante === filtros.executante;
 
-    // Filtro de local de atendimento
-    const matchesLocalAtendimento =
-      !filtros.localAtendimento ||
-      filtros.localAtendimento === 'todos' ||
-      rec.localAtendimento === filtros.localAtendimento;
-
-    // Filtro de nome procedimento
-    const matchesNomeProcedimento =
-      !filtros.nomeProcedimento ||
-      filtros.nomeProcedimento === 'todos' ||
-      rec.nomeProcedimento.toLowerCase().includes(filtros.nomeProcedimento.toLowerCase());
-
-    // Filtro de conta
-    const matchesConta =
-      !filtros.conta ||
-      rec.conta.toLowerCase().includes(filtros.conta.toLowerCase());
+    // Filtro de beneficiário
+    const matchesBeneficiario =
+      !filtros.beneficiario ||
+      filtros.beneficiario === 'todos' ||
+      rec.beneficiario === filtros.beneficiario;
 
     // Filtro de período
     const matchesPeriodo = aplicarFiltroPeriodo(rec.dataAtendimento, filtros.periodo, filtros.dataInicio, filtros.dataFim);
 
-    return matchesStatus && matchesInstituicao && matchesFormaPagamento && matchesExecutante && 
-           matchesLocalAtendimento && matchesNomeProcedimento && matchesConta && matchesPeriodo;
+    return matchesExecutante && matchesBeneficiario && matchesPeriodo;
   });
 };
 
